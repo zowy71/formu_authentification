@@ -1,44 +1,44 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
-require_once('autload.php');
+class User {
+    /**
+     * @var int
+     */
+    private int $id;
+    /**
+     * @var string
+     */
+    private string $firstName;
+    /**
+     * @var string
+     */
+    private string $lastName;
+    /**
+     * @var string
+     */
+    private string $login;
+    /**
+     * @var int
+     */
+    private int $phone;
 
-echo <<<HTML
-<!doctype html>
-<html lang="fr">
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <title>Test rapide de la classe User</title>
-    </head>
-    <body>
+    public function __construct($data) {
+        $this->id = isset($data['id']) ? 'id' : 0;
+        $this->firstName = $data['firstName'];
+        $this->lastName = $data['lastName'];
+        $this->login = $data['login'];
+        $this->phone = $data['phone'];
+    }
 
-HTML;
-
-$user1 = new User([
-    'id' => '1',
-    'firstName' => 'Marcel',
-    'lastName' => 'Essai',
-    'login' => 'essai',
-    'phone' => '123456789',
-]);
-echo "<pre>\n";
-var_dump($user1);
-echo "</pre>\n";
-
-echo $user1->profile();
-
-$user2 = new User([
-    'id' => '2',
-    'firstName' => 'BoB',
-    'lastName' => '',
-    'login' => 'bob'
-]);
-echo "<pre>\n";
-var_dump($user2);
-echo "</pre>\n";
-
-echo <<<HTML
-    {$user2->profile()}
-    </body>
-</html>
-HTML;
+    public function profile(): string
+    {
+        return <<<HTML
+      <p>
+        Firstname : {$this->firstName}<br>
+        Lastname : {$this->lastName}<br>
+        Login : {$this->login} - {$this->id}<br>
+        Phone number : {$this->phone}
+      </p>
+    HTML;
+    }
+}
