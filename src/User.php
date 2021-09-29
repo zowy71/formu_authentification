@@ -23,7 +23,7 @@ class User {
     private int $phone;
 
     public function __construct($data) {
-        $this->id = isset($data['id']) ? 'id' : 1;
+        $this->id = isset($data['id']) ? 'id' : 0;
         $this->firstName = $data['firstName'];
         $this->lastName = $data['lastName'];
         $this->login = $data['login'];
