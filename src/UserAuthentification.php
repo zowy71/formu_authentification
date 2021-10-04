@@ -34,12 +34,6 @@ HTML;
         if ($stmt->rowCount() == 0)
             throw new AuthenticationException();
 
-    Session::start();
-    $_SESSION[Session::session_key]["connected"] = true;
-
-    $stmt->setFetchMode(PDO::FETCH_CLASS, "User");
-    return $stmt->fetch();
-
     }
 
 }
