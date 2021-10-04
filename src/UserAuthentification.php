@@ -21,6 +21,24 @@ HTML;
 
     public function getUserFromAuth(array $data)
     {
+        $stmt = MyPDO::getInstance()->prepare(
+            <<<SQL
+            SELECT *
+            FROM user
+            WHERE login=:login AND sha512pass=SHA2(:pass, 512)
+        SQL
+        );
+
+        $stmt->execute(array(":login" => $data["login"], ":pass" => $data["pass"]));
+
+        if ($stmt->rowCount() == 0)
+            throw new AuthenticationException();
+
+    Session::start();
+    $_SESSION[Session::session_key]["connected"] = true;
+
+    $stmt->setFetchMode(PDO::FETCH_CLASS, "User");
+    return $stmt->fetch();
 
     }
 
