@@ -34,7 +34,7 @@ HTML;
         if ($stmt->rowCount() == 0)
             throw new AuthenticationException();
 
-        $stmt->setFetchMode(PDO::FETCH_CLASS, "User");
+        $stmt->setFetchMode(PDO::FETCH_ASSOC, "User");
         return $stmt->fetch();
 
     }
