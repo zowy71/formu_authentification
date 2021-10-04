@@ -111,4 +111,8 @@ $stmt->execute();
 while (($ligne = $stmt->fetch()) !== false) {
     echo "<p>{$ligne['name']}\n";
 }
+<<<<<<< HEAD
 */
+=======
+*/
+>>>>>>> b4022815b9d0ae5e6a65dd5e18ed3572ae9d95dc

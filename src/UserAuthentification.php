@@ -19,6 +19,7 @@ class UserAuthentification {
 HTML;
     }
 
+<<<<<<< HEAD
     public function getUserFromAuth(array $data): string
     {
         $rqt = MyPDO::getInstance()->prepare(
@@ -30,6 +31,25 @@ SQL );
         $rqt->setFetchMode(PDO::FETCH_ASSOC);
         $rqt->execute(array("login" => $data['login'], "password" => $data['password']));
         return $rqt->fetch();
+=======
+    public function getUserFromAuth(array $data)
+    {
+        $stmt = MyPDO::getInstance()->prepare(
+            <<<SQL
+            SELECT *
+            FROM user
+            WHERE login=:login AND sha512pass=SHA2(:pass, 512)
+        SQL
+        );
+
+        $stmt->execute(array(":login" => $data["login"], ":pass" => $data["pass"]));
+
+        if ($stmt->rowCount() == 0)
+            throw new AuthenticationException();
+
+        $stmt->setFetchMode(PDO::FETCH_ASSOC, "User");
+        return $stmt->fetch();
+>>>>>>> b4022815b9d0ae5e6a65dd5e18ed3572ae9d95dc
 
     }
 
