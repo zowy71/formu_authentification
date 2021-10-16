@@ -14,7 +14,7 @@ CSS
 );
 
 if (User::isConnected()) {
-  $form = User::logoutForm('UserAuthentication.php');
+  $form = User::logoutForm('src/UserAuthentication.php');
   $p->appendContent(
     <<<HTML
     {$form}
