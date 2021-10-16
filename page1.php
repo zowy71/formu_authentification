@@ -8,7 +8,7 @@ $authentication = new UserAuthentication();
 // Un utilisateur est-il connecte ?
 if (!$authentication->isUserConnected()) {
     // Rediriger vers le formulaire de connexion
-    header("form1.php");
+    header("Location: form1.php");
     die(); // Fin du programme
 }
 
