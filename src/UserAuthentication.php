@@ -93,11 +93,11 @@ SQL
     protected function setUser(User $user): void
     {
         //Affecte l'utilisateur passé en paramètre à la propriété $user
-		//code à écrire
+		$this->user = $user;
 		//Démarrage de la session
-		//code à écrire
+		Session::start();
 		//Affecte la mémoire dans les données de session passé en paramètre à la propriété $user
-		//code à écrire
+		$user = new User($user_data);
     }
 
     /**
@@ -108,9 +108,10 @@ SQL
     public function isUserConnected(): bool
     {
 		//Démarrage de la session
-		//code à écrire
-		//Test si un utilisateur est mémorisé dans les données de session
-		//code à écrire
+		Session::start();
+        //Test si un utilisateur est mémorisé dans les données de session
+        return isset($_SESSION[self::session_key]['connected']) ? $_SESSION[self::session_key]['connected'] : false;
+
     }
 
     /**
@@ -124,7 +125,14 @@ SQL
         // Convertir tous les caractères spéciaux dans $buttonText
         $buttonText = htmlspecialchars($buttonText, ENT_QUOTES, 'utf-8');
         // Proposer le formulaire de déconnexion
-        // code à écrire
+        return <<<HTML
+      <form method="POST" action="{$action}">
+        <input type="submit" name="logout" value="{$buttonText}">
+      </form>
+
+HTML;
+}
+
     }
 
     /**
@@ -137,12 +145,17 @@ SQL
     {
         if (isset($_REQUEST[self::LOGOUT_INPUT_NAME])) {
            //Démarrage de la session
-			//code à écrire
+			Session::start();
 			// Désactivation de la variable SESSION_KEY
-            //code à écrire
+            unset($_SESSION[self::session_key]);
 			//Affecte l'utilisateur à null
-            //code à écrire
+            $user = null;
         }
+
+        else {
+            throw new SessionException();
+        }
+
     }
 
     /**
@@ -156,21 +169,23 @@ SQL
     protected function getUserFromSession(): User
     {
         // Mise en place de la session
-       //code à écrire
+        if (User::isUserConnected()) {
+            Session::start();
         // La variable de session existe ?
-        //code à écrire
+            if (isset($_SESSION[self::session_key]['user'])) {
             // Lecture de la variable de session
-            //code à écrire
+                var_dump $_SESSION['user'];
             // Est-ce un objet du bon type ?
-           //code à écrire
+                if (gettype($_SESSION[Session::session_key]["user"]) == "object")
                 // insertion du user dans la fonctionnalité setUser
-				//code à écrire
-				// OUI ! on le retourne
-				//code à écrire
-            }
+				    user->setUser();
+                }
         }
+        else {
         // NON ! exception SessionException
-        throw new SessionException();
+            throw new SessionException();
+        }
+        
     }
 
     /**
@@ -182,10 +197,13 @@ SQL
     public function getUser(): User
     {
         // Si pas d'utilisateur trouvé
-		//code à écrire
+		if ()
 			// exception SessionException "Aucun utilisateur connecté"
-			//code à écrire
+			throw new SessionException("Aucun utilisateur connecté");
 		// Sinon retourne l'utilisateur
-		//code à écrire
+		else {
+            return $_SESSION[Session::session_key]['user'];
+        }
     }
+
 }
