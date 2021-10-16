@@ -1,6 +1,7 @@
 <?php declare(strict_types=1);
 
 require_once('autload.php');
+require_once('src/MYPD0.php');
 
 $authentication = new UserAuthentication();
 
