@@ -4,7 +4,6 @@ require_once('src/MyPD0.php');
 
 $p = new WebPage('Authentification');
 
-// Production du formulaire de connexion
 $p->appendCSS(
   <<<CSS
     form input {
